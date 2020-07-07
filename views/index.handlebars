@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<style>
+  body {
+    color: black;
+  }
+
+  .container {
+    background-image: url("../table_background.jpg");
+    background-repeat: no-repeat;
+  }
+
+  td {
+    width: 10px;
+  }
+
+  thead {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+  }
+
+  table {
+    text-align: center;
+  }
+
+</style>
+
+<div class="container">
+  <br>
+<h2 style="text-align:center">🍔 Burger App 🍔</h2>
+
+<div class="row">
+
+<div class="col-sm-8">
+<div class="menu"> 
+  <br>
+<h3> Menu </h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td> ID </td>
+      <td> Burger Name </td>
+      <td> Click To Devour </td>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each burger}}
+    <tr>
+      <td>
+        {{this.id}}
+      </td>
+      <td>
+        {{this.burger}}
+      </td>
+      <td>
+        <button data-burgerid="{{this.id}}" class="devburger btn btn-outline-warning btn-sm">Devour It!</button>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="devour">
+  <br>
+<h3> Devoured! </h3>
+<table class="table">
+  <tbody>
+    {{#each burger}}
+    <tr>
+      <td>
+        {{this.id}}. {{this.burger}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<br>
+<div class="row">
+
+<div class="col-sm-8">
+  <div class="add">
+  <h3>Add A Burger <button type="submit" class="submit btn btn-success btn-sm">Save!</button> </h3> 
+  <form id="addburger" class="button-size">
+    <textarea type="text" name="burger"></textarea>
+  </form>
+  </div>
+</div>
+
+</div>
+
+
+{{!-- <h2>Update a Burger</h2>
+<form id="updateburger" class="button-size">
+  <select name="id">
+		{{#each burgerList}}
+			<option value="{{this.id}}">{{this.burger}}</option>
+		{{/each}}
+	</select>
+  <textarea type="text" name="burger" placeholder="Update Here!"></textarea>
+  <button type="submit">Update Burger!</button>
+</form> --}}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+  $(".devburger").on("click", function(event) {
+
+    var id = $(this).data("burgerid");
+
+    // Send the DELETE request.
+    $.ajax("/api/burgers/" + id, {
+      type: "DELETE"
+    }).then(
+      function() {
+        console.log("deleted id ", id);
+        location.reload();
+      }
+    );
+  });
+
+  $("#addburger").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    // [name=movie] will find an element with a "name" attribute equal to the string "movie"
+    // this searches for the id "#admovie" and then any "name" attribute with a "movie" value
+    var newBurger = {
+      burger: $("#addburger [name=burger]").val().trim()
+    };
+
+    // Send the POST request.
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: newBurger
+    }).then(
+      function() {
+        console.log("added new burger");
+        location.reload();
+      }
+    );
+  });
+
+  $("#updateburger").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    // Get the ID by finding an element with a "name" attribute equal to the string "id"
+    var id = $("[name=id]").val().trim();
+
+    var updatedBurger = {
+      burger: $("#updateburger [name=burger]").val().trim()
+    };
+
+    // Send the PUT request.
+    $.ajax("/api/burgers/" + id, {
+      type: "PUT",
+      data: updatedBurger
+    }).then(
+      function() {
+        console.log("updated id ", id);
+        location.reload();
+      }
+    );
+  });
+</script>
