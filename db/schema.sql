@@ -9,6 +9,7 @@ USE burger_db;
 CREATE TABLE burgerList (
   id int NOT NULL AUTO_INCREMENT,
   burger varchar(255) NOT NULL,
+  devoured BOOLEAN DEFAULT false,
   PRIMARY KEY (id)
 );
 
