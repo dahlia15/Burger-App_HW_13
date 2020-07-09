@@ -12,7 +12,7 @@ var burger = {
         })
     },
     update: function(objColVals, condition, cb) {
-        orm.update("budgerList", objColVals, condition, function(res) {
+        orm.update("burgerList", objColVals, condition, function(res) {
             cb(res);
         })
     }

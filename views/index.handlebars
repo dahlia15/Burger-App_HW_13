@@ -8,6 +8,7 @@
   .container {
     background-image: url("table_background.jpg");
     background-repeat: no-repeat;
+    background-position:inherit;
   }
 
   td {
@@ -47,7 +48,7 @@
   </thead>
   <tbody>
     {{#each burger}}
-      {{#unless devour}}
+      {{#unless devoured}}
     <tr>
       <td>
         {{this.id}}
@@ -74,7 +75,7 @@
 <table class="table">
   <tbody>
     {{#each burger}}
-    {{#if devour}}
+    {{#if devoured}}
     <tr>
       <td>
         {{this.id}}. {{this.burger}}
@@ -96,7 +97,7 @@
     <div class="form-group">
       <h3>Add A Burger <button type="submit" class="submit btn btn-success btn-sm">Save!</button> </h3>
       <label for="bur"> Burger Name:</label>
-      <input type="text" id="bur" name="name">
+      <input type="text" id="bur" name="burger">
     </div>
 
   </form>

@@ -13,16 +13,21 @@
 
 <script type="text/javascript">
 
-  $(".devoured").on("click", function(event) {
-
+  $("button[name='devour']").on("click", function(event) {
+    event.preventDefault();
     var id = $(this).data("burgerid");
+
+    var updatedBurger = {
+      devoured: true
+    };
 
     // Send the DELETE request.
     $.ajax("/api/burgers/" + id, {
-      type: "DELETE"
+      type: "PUT",
+      data: updatedBurger
     }).then(
       function() {
-        console.log("deleted id ", id);
+        console.log("devoued id ", id);
         location.reload();
       }
     );
@@ -31,11 +36,10 @@
   $(".submit").on("click", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
-    console.log("test", $("#addburger [name=burger]").val().trim());
     // [name=movie] will find an element with a "name" attribute equal to the string "movie"
     // this searches for the id "#admovie" and then any "name" attribute with a "movie" value
     var newBurger = {
-      burger: $("#addburger [name=burger]").val().trim()
+      burger: $("#bur[name='burger']").val().trim()
     };
 
     // Send the POST request.
