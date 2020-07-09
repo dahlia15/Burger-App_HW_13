@@ -6,9 +6,10 @@
   }
 
   .container {
-    background-image: url("table_background.jpg");
+    margin-top: 10px;
+    background-image: url("table_cloth.jpg");
     background-repeat: no-repeat;
-    background-position:inherit;
+    background-size: 100%;
   }
 
   td {
@@ -23,6 +24,7 @@
 
   table {
     text-align: center;
+    background-color: rgba(230, 225, 225, 0.4);
   }
 
 </style>
@@ -57,7 +59,7 @@
         {{this.burger}}
       </td>
       <td>
-        <button data-burgerid="{{this.id}}" class="btn btn-outline-warning btn-sm" type="devoured" name="devoured">Devour It!</button>
+        <button data-burgerid="{{this.id}}" class="btn btn-warning btn-sm" type="devoured" name="devoured">Devour It!</button>
       </td>
     </tr>
     {{/unless}}
